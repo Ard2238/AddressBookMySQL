@@ -1,0 +1,98 @@
+/* UC1 -- create a database */
+
+create database addressbook_service;
+------------------------------------------------------------------------------------------------------
+
+/* UC2 -- create a address book table with attributes given */
+
+create table address_book (
+    -> firstName varchar(15) not null,
+    -> lastName varchar(15) not null,
+    -> address varchar(30) not null,
+    -> city varchar(10) not null,
+    -> state varchar(20) not null,
+    -> zipcode int not null,
+    -> phone long not null,
+    -> email varchar(20) not null
+    -> );
+------------------------------------------------------------------------------------------------------
+
+/* UC3 -- insert new contacts into address book */
+
+ insert into address_book values
+    -> ('Abhishek' , 'Das', 'HBC' , 'GGN', 'HR', 122002, 123456789, 'ard@gmail.com');
+ insert into address_book values
+    -> ('Nikita' , 'Sharma', 'DLF', 'GGN', 'HR', 122006, 987654312, 'nikita@gmail.com');
+ insert into address_book values
+    -> ('Prajwal' , 'Rao', 'HEC', 'Bangalore' , 'KN', 340921, 9373625611, 'parjwal@gmail.com');
+ insert into address_book values
+    -> ('Aditya', 'Viren', 'Agra', 'Agra', 'UP', 826004, 8971641112, 'aditya@gmail.com');
+------------------------------------------------------------------------------------------------------
+
+/* UC4 -- edit existing contact person using their name*/
+
+ update address_book
+ set address = 'Ardee City'
+ where firstName = 'Abhishek' and lastName = 'Das';
+------------------------------------------------------------------------------------------------------
+
+/* UC5 -- delete a person using person's name*/
+
+ delete
+ from address_book
+ where firstName = 'Aditya' and lastName = 'Viren';
+------------------------------------------------------------------------------------------------------
+
+/* UC6 -- retrieve people belonging to a State or City*/
+
+select *
+    -> from address_book
+    -> where city = 'GGN';
+------------------------------------------------------------------------------------------------------
+
+/* UC7 -- understand size of city or State*/
+
+ select count(city), count(state)
+    -> from address_book;
+------------------------------------------------------------------------------------------------------
+
+/* UC8 -- retrieve entries sorted alphabetically by name in a city*/
+
+ select *
+    -> from address_book
+    -> where city = 'GGN'
+    -> order by firstName;
+------------------------------------------------------------------------------------------------------
+
+/* UC9 -- identify each addressbook with name and type*/
+
+alter table address_book
+    -> add type varchar(15);
+
+update address_book
+    -> set type = 'Friends'
+    -> where firstName = 'Abhishek';
+
+update address_book
+    -> set type = 'Family'
+    -> where firstName = 'Nikita';
+
+update address_book
+    -> set type = 'Profession'
+    -> where firstName = 'Prajwal';
+------------------------------------------------------------------------------------------------------
+
+/* UC10 -- get number of people by type */
+
+ select type, count(type)
+    -> from address_book
+    -> group by type;
+------------------------------------------------------------------------------------------------------
+
+/* UC11 -- add a person to both family and friend type*/
+
+ insert into address_book values
+    -> ('Praveen', 'Satya', 'Carlton', 'HYD' , 'AP', 129871, 9267671191, 'praveen@gmail.com', 'Family,Friends');
+
+select * from address_book;
+------------------------------------------------------------------------------------------------------
